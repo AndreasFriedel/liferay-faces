@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.scope;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -38,6 +39,24 @@ import com.liferay.faces.bridge.container.PortletContainer;
  * @author  Neil Griffin
  */
 public interface BridgeRequestScope {
+
+	/**
+	 * @author  Neil Griffin
+	 */
+	public static enum Transport {
+
+		/**
+		 * Indicates that the bridge request scope should be carried from the ACTION_PHASE/EVENT_PHASE into the
+		 * RENDER_PHASE by setting a render parameter.
+		 */
+		RENDER_PARAMETER,
+
+		/**
+		 * Indicates that the bridge request scope should be carried from the ACTION_PHASE/EVENT_PHASE into the
+		 * RENDER_PHASE by setting a portlet session attribute.
+		 */
+		PORTLET_SESSION_ATTRIBUTE
+	}
 
 	/**
 	 * This method removes the excluded request attributes. It is designed to be called at the beginning of the
@@ -101,6 +120,11 @@ public interface BridgeRequestScope {
 	 *          false</code>.
 	 */
 	boolean isRedirectOccurred();
+
+	/**
+	 * Returns the date in which the scope was created, measured in UTC milliseconds from the epoch.
+	 */
+	public long getDateCreated();
 
 	/**
 	 * Sets the flag indicating whether or not the Faces lifecycle was executed.
